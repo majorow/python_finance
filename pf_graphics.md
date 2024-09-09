@@ -26,3 +26,13 @@ plt.bar(fall.index, height=fall_b, bottom=fall.CLOSE, color='r')
 plt.show()
 ```
 ![Свечной график](./fig2_2.png)
+### 2.2 График торговых баров
+Это не единственный способ представления пятимерных данных. Можно даже не использовать цвет.
+```python
+plt.figure(figsize=(18, 12))
+plt.bar(data.index, height=data.HIGH - data.LOW, width=0.2, bottom=data.LOW, color='k')
+plt.scatter(data.index, data.OPEN, s=10, c='k', marker=0)
+plt.scatter(data.index, data.CLOSE, s=10, c='k', marker=1)
+plt.show()
+```
+![График орговых баров](./fig2_3.png)

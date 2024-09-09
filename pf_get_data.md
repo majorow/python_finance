@@ -1,4 +1,18 @@
 ## Тема 1. Получение данных
-Без этой темы все остальное бессмысленное поэтому без лишних рассуждений перейдем к вопросу откуда получать данные. На первый взгляд, вопрос странный, но в учебных целях нам потребуются данные, которые ничем не будут отличаться от.
 Одними из источников финансовых данных являются биржи, агрегаторы экономической информации и т.п.
-Получение данных с Московской биржи
+### 1.1 Получение данных с Московской биржи
+На Московской бирже есть отличное API для получения данных торгов, которое хорошо описано [в этом документе](https://fs.moex.com/files/6523).
+Для примера получим исторические данные по индексу RTSI.
+```python
+import pandas as pd
+
+def get_batch_futures(tiker: str, from_date: str='', start: int=0) -> tuple:
+  url = 'https://iss.moex.com/iss/history/engines/futures/markets/forts/'
+  url += 'boards/rfud/securities/' + tiker + '.json?start='+ str(start)
+  if len(from_date) > 0: url += '&from=' + from_date
+  res = pd.read_json(url)
+  history = res['history']
+  cols = history['columns']
+  data = history['data']
+  return data, cols, res['history.cursor']['data'][0]
+```
